@@ -54,6 +54,9 @@ USE_L10N = True
 # If you set this to False, Django will not use timezone-aware datetimes.
 USE_TZ = True
 
+# Login URL
+LOGIN_URL = '/welcome'
+
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/var/www/example.com/media/"
 MEDIA_ROOT = root("..", "uploads")
@@ -75,7 +78,7 @@ STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-    root("assets"),
+    root("..", "assets"),
 )
 
 # List of finder classes that know how to find static files in
@@ -112,7 +115,7 @@ ROOT_URLCONF = 'mysite.urls'
 WSGI_APPLICATION = 'mysite.wsgi.application'
 
 TEMPLATE_DIRS = (
-    root("templates"),
+    root("..", "templates"),
 )
 
 DJANGO_APPS = (

@@ -1,0 +1,24 @@
+{% extends "_layouts/base.html" %}
+
+{% block page_title %}Welcome{% endblock %}
+
+{% block page_content %}
+<!-- Welcome Pane -->
+		<div class="welcome">
+			<div class="container">
+				<div class="row-fluid">
+					<div class="span10 offset1">
+						<!-- Welcome Video -->
+						<div class="welcome-video">
+							Welcome In
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+{% endblock %}
+
+{% block additional_js %}
+	<script src="{{ STATIC_URL }}js/welcome.js"></script>
+{% endblock %}
