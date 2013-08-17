@@ -55,7 +55,7 @@ USE_L10N = True
 USE_TZ = True
 
 # Login URL
-LOGIN_URL = '/welcome'
+LOGIN_URL = '/'
 
 # Email Info
 EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'

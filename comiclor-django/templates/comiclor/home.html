@@ -6,10 +6,10 @@
 		<div class="nav-collapse collapse">
 			<ul class="nav pull-left">
 				<li class="current-page">
-					<a href="home.html"><i class="icon-home"></i><br />Home</a>
+					<a href="{% url 'home' %}"><i class="icon-home"></i><br />Home</a>
 				</li>
 				<li>
-					<a href="library.html"><i class="icon-book"></i><br />My Library</a>
+					<a href="{% url 'library' %}"><i class="icon-book"></i><br />My Library</a>
 				</li>	
 				<li>
 					<a href="portfolio.html"><i class="icon-bookmark"></i><br />Saved Comics</a>
@@ -52,5 +52,4 @@
 {% endblock %}
 
 {% block additional_js %}
-	<script src="{{ STATIC_URL }}js/welcome.js"></script>
 {% endblock %}

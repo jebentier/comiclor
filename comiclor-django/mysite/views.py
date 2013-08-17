@@ -5,9 +5,12 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.core.context_processors import csrf
 from django.shortcuts import render_to_response
 from django.core.mail import send_mail
+from datetime import date
 import json, random, string
 
 def welcome(request):
+	if request.user.is_authenticated():
+		return HttpResponseRedirect("/home")
 	c = {}
 	c.update(csrf(request))
 	if request.method == "POST":
@@ -17,7 +20,7 @@ def welcome(request):
 		if user is not None and user.profile.is_active:
 			login(request, user)
 			return HttpResponseRedirect("/home")
-		return HttpResponseRedirect("/welcome?message=Invalid Account")
+		return HttpResponseRedirect("/?message=Invalid Account")
 	return render_to_response('welcome.html', c)
 
 def register_user(request):
@@ -70,12 +73,16 @@ def update_user(request):
 		fname = request.POST['fname']
 		lname = request.POST['lname']
 		dname = request.POST['dname']
+		dob_month = request.POST['dob_month']
+		dob_day = request.POST['dob_day']
+		dob_year = request.POST['dob_year']
 		try:
 			u = User.objects.get(username=email)
 		except User.DoesNotExist:
 			return HttpResponse(json.dumps({"response_code": 3}), content_type="application/json")
 		p = u.profile
 		p.display_name = dname
+		p.date_of_birth = date(month=int(dob_month), day=int(dob_day), year=int(dob_year))
 		p.save()
 		u.first_name = fname
 		u.last_name = lname
@@ -86,7 +93,7 @@ def update_user(request):
 	else:
 		return HttpResponse(json.dumps({"response_code": -1}), content_type="application/json")
 
-@login_required
+@login_required(redirect_field_name=None)
 def logoff(request):
 	logout(request)
-	return HttpResponseRedirect('/welcome')
+	return HttpResponseRedirect('/')

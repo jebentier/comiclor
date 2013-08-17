@@ -1,5 +1,6 @@
 $(function () {
 	$('#registration').wizard();
+	$('.dropdown-date-picker').dropdown_datepicker();
 	$(document).on('click', '.form-actions button', function(){
 		var csrftoken = $.cookie('csrftoken');
 		$.ajaxSetup({
@@ -67,7 +68,10 @@ $(function () {
 						password: $('.registration-form input[name="password"]').val(),
 						fname: $('.registration-form input[name="fname"]').val(),
 						lname: $('.registration-form input[name="lname"]').val(),
-						dname: $('.registration-form input[name="dname"]').val()
+						dname: $('.registration-form input[name="dname"]').val(),
+						dob_month: $('.dropdown-date-picker').getDatePickerValue("month"),
+						dob_day: $('.dropdown-date-picker').getDatePickerValue("day"),
+						dob_year: $('.dropdown-date-picker').getDatePickerValue("year")
 					},
 					success: function(data){
 						if(data['response_code']==0){

@@ -258,6 +258,37 @@ ul.steps li {
         0 -1px 25px 0 rgba(0,0,0,.05) inset;
 }
 
+/* Library */
+.library-grouping{
+
+}
+.library-grouping h3.grouping-title{
+    margin-left:40px;
+    margin-bottom:0px;
+    cursor: pointer;
+}
+.library-grouping h3.grouping-title i{
+    vertical-align:middle;
+    font-size: 15px;
+}
+.library-grouping hr{
+    margin-top: 0px;
+}
+.library-grouping .library-grouping-content {
+    width: 90%;
+    margin: 0 auto;
+}
+.library-grouping .library-grouping-content img{
+    max-width: 175px;
+    max-height: 175px;
+    margin: 5px;
+    cursor: pointer;
+}
+.library-grouping .library-grouping-content img.placeholder{
+    width: 175px;
+    height: 175px;
+}
+
 /* Footer */
 footer {
     margin: 0 auto;

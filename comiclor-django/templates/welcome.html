@@ -14,7 +14,7 @@
 						</div>
 						<!-- Login Form -->
 						<div class="login-form fuelux" style="display:none; height:450px; width:823px;">
-							<form class="form-horizontal" style="background:#fff; height:300px; border-radius:5px; border:2px #ccc solid; position:relative; top:50%; margin-top: -148px;" method="POST" action="/welcome">{% csrf_token %}
+							<form class="form-horizontal" style="background:#fff; height:300px; border-radius:5px; border:2px #ccc solid; position:relative; top:50%; margin-top: -148px;" method="POST" action="/">{% csrf_token %}
 								<fieldset>
 									<legend style="margin-bottom:0px;">User Login</legend>
 									<span class="help-block" style="margin-bottom:20px;">Enter your login email and password.</span>
@@ -120,15 +120,12 @@
 													<span class="help-inline">Example block-level help text here.</span>
 												</div>
 											</div>
-											<!--
 											<div class="control-group">
 												<label class="control-label">Birthday</label>
 												<div class="controls">
-													<input type="password" placeholder="Password">
-													<span class="help-inline">Example block-level help text here.</span>
+													<div class="dropdown-date-picker"></div>
 												</div>
 											</div>
-											-->
 										</fieldset>
 										<span class="help-block" style="text-align:center;">More information about your account can be filled out inside.</span>
 										<div class="form-actions">
@@ -185,4 +182,5 @@
 {% block additional_js %}
 	<script src="{{ STATIC_URL }}static/js/welcome.js"></script>
 	<script src="{{ STATIC_URL }}static/js/jquery.cookie.js"></script>
+	<script src="{{ STATIC_URL }}static/js/dropdown.datepicker.js"></script>
 {% endblock %}
