@@ -14,9 +14,9 @@ $(function () {
 					url: '/register',
 					type: 'post',
 					data: {
-						email: $('input[name="email"]').val(),
-						password: $('input[name="password"]').val(),
-						password_conf: $('input[name="password_conf"]').val()
+						email: $('.registration-form input[name="email"]').val(),
+						password: $('.registration-form input[name="password"]').val(),
+						password_conf: $('.registration-form input[name="password_conf"]').val()
 					},
 					success: function(data){
 						if(data['response_code']==0){
@@ -35,13 +35,52 @@ $(function () {
 				});
 				break;
 			case "confirm":
-				$('li[data-target="#step2"]').removeClass('active');
-				$('li[data-target="#step3"]').addClass('active').find('.badge').addClass('badge-info');
-				$('#step2').removeClass('active');
-				$('#step3').addClass('active');
+				$.ajax({
+					url: '/confirm_email',
+					type: 'post',
+					data: {
+						email: $('.registration-form input[name="email"]').val(),
+						conf_code: $('.registration-form input[name="conf_code"]').val()
+					},
+					success: function(data){
+						if(data['response_code']==0){
+							$('li[data-target="#step2"]').removeClass('active');
+							$('li[data-target="#step3"]').addClass('active').find('.badge').addClass('badge-info');
+							$('#step2').removeClass('active');
+							$('#step3').addClass('active');
+						}
+						else{
+							alert('error!');
+						}
+					},
+					error: function(){
+						alert('error!');
+					}
+				});
 				break;
 			case "update":
-				
+				$.ajax({
+					url: '/update_user',
+					type: 'post',
+					data: {
+						email: $('.registration-form input[name="email"]').val(),
+						password: $('.registration-form input[name="password"]').val(),
+						fname: $('.registration-form input[name="fname"]').val(),
+						lname: $('.registration-form input[name="lname"]').val(),
+						dname: $('.registration-form input[name="dname"]').val()
+					},
+					success: function(data){
+						if(data['response_code']==0){
+							window.location = '/home'
+						}
+						else{
+							alert('error!');
+						}
+					},
+					error: function(){
+						alert('error!');
+					}
+				});
 				break;
 			case "cancel":
 				$('.registration-content input').val("");

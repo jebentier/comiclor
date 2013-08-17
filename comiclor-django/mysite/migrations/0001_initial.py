@@ -9,21 +9,21 @@ class Migration(SchemaMigration):
 
     def forwards(self, orm):
         # Adding model 'UserProfile'
-        db.create_table(u'comiclor_userprofile', (
+        db.create_table(u'mysite_userprofile', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('user', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['auth.User'], unique=True)),
             ('display_name', self.gf('django.db.models.fields.CharField')(max_length=50)),
-            ('date_of_birth', self.gf('django.db.models.fields.DateField')(null=True)),
+            ('date_of_birth', self.gf('django.db.models.fields.DateField')()),
             ('confirmation_code', self.gf('django.db.models.fields.CharField')(max_length=10)),
             ('is_active', self.gf('django.db.models.fields.BooleanField')(default=False)),
             ('slug', self.gf('django.db.models.fields.SlugField')(max_length=50)),
         ))
-        db.send_create_signal(u'comiclor', ['UserProfile'])
+        db.send_create_signal(u'mysite', ['UserProfile'])
 
 
     def backwards(self, orm):
         # Deleting model 'UserProfile'
-        db.delete_table(u'comiclor_userprofile')
+        db.delete_table(u'mysite_userprofile')
 
 
     models = {
@@ -56,23 +56,23 @@ class Migration(SchemaMigration):
             'user_permissions': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['auth.Permission']", 'symmetrical': 'False', 'blank': 'True'}),
             'username': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '30'})
         },
-        u'comiclor.userprofile': {
-            'Meta': {'object_name': 'UserProfile'},
-            'confirmation_code': ('django.db.models.fields.CharField', [], {'max_length': '10'}),
-            'date_of_birth': ('django.db.models.fields.DateField', [], {'null': 'True'}),
-            'display_name': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'slug': ('django.db.models.fields.SlugField', [], {'max_length': '50'}),
-            'user': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['auth.User']", 'unique': 'True'})
-        },
         u'contenttypes.contenttype': {
             'Meta': {'ordering': "('name',)", 'unique_together': "(('app_label', 'model'),)", 'object_name': 'ContentType', 'db_table': "'django_content_type'"},
             'app_label': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
+        },
+        u'mysite.userprofile': {
+            'Meta': {'object_name': 'UserProfile'},
+            'confirmation_code': ('django.db.models.fields.CharField', [], {'max_length': '10'}),
+            'date_of_birth': ('django.db.models.fields.DateField', [], {}),
+            'display_name': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'slug': ('django.db.models.fields.SlugField', [], {'max_length': '50'}),
+            'user': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['auth.User']", 'unique': 'True'})
         }
     }
 
-    complete_apps = ['comiclor']
+    complete_apps = ['mysite']

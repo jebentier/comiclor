@@ -57,6 +57,11 @@ USE_TZ = True
 # Login URL
 LOGIN_URL = '/welcome'
 
+# Email Info
+EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = 1025
+
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/var/www/example.com/media/"
 MEDIA_ROOT = root("..", "uploads")

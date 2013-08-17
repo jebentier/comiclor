@@ -8,22 +8,15 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding model 'UserProfile'
-        db.create_table(u'comiclor_userprofile', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('user', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['auth.User'], unique=True)),
-            ('display_name', self.gf('django.db.models.fields.CharField')(max_length=50)),
-            ('date_of_birth', self.gf('django.db.models.fields.DateField')(null=True)),
-            ('confirmation_code', self.gf('django.db.models.fields.CharField')(max_length=10)),
-            ('is_active', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('slug', self.gf('django.db.models.fields.SlugField')(max_length=50)),
-        ))
-        db.send_create_signal(u'comiclor', ['UserProfile'])
+        # Deleting field 'UserProfile.date_of_birth'
+        db.delete_column(u'comiclor_userprofile', 'date_of_birth')
 
 
     def backwards(self, orm):
-        # Deleting model 'UserProfile'
-        db.delete_table(u'comiclor_userprofile')
+        # Adding field 'UserProfile.date_of_birth'
+        db.add_column(u'comiclor_userprofile', 'date_of_birth',
+                      self.gf('django.db.models.fields.DateField')(null=True),
+                      keep_default=False)
 
 
     models = {
@@ -59,7 +52,6 @@ class Migration(SchemaMigration):
         u'comiclor.userprofile': {
             'Meta': {'object_name': 'UserProfile'},
             'confirmation_code': ('django.db.models.fields.CharField', [], {'max_length': '10'}),
-            'date_of_birth': ('django.db.models.fields.DateField', [], {'null': 'True'}),
             'display_name': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),

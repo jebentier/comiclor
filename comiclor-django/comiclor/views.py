@@ -3,5 +3,5 @@ from django.shortcuts import render_to_response
 
 @login_required
 def home(request):
-	c = {"username": request.user.username.split("@")[0]}
+	c = {"display_name": request.user.profile.display_name}
 	return render_to_response('comiclor/home.html', c)
