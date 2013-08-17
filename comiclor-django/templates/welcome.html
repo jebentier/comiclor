@@ -54,21 +54,21 @@
 											<div class="control-group">
 												<label class="control-label">Email Address</label>
 												<div class="controls">
-													<input type="text" placeholder="joeshmo@gmail.com">
+													<input type="text" name="email" placeholder="joeshmo@gmail.com">
 													<span class="help-block">Example block-level help text here.</span>
 												</div>
 											</div>
 											<div class="control-group">
 												<label class="control-label">Password</label>
 												<div class="controls">
-													<input type="password" placeholder="Password">
+													<input type="password" name="password" placeholder="Password">
 													<span class="help-block">Example block-level help text here.</span>
 												</div>
 											</div>
 											<div class="control-group">
 												<label class="control-label">Confirm Password</label>
 												<div class="controls">
-													<input type="password" placeholder="Password">
+													<input type="password" name="password_conf" placeholder="Confirm Password">
 													<span class="help-block">Example block-level help text here.</span>
 												</div>
 											</div>
@@ -182,4 +182,5 @@
 
 {% block additional_js %}
 	<script src="{{ STATIC_URL }}static/js/welcome.js"></script>
+	<script src="{{ STATIC_URL }}static/js/jquery.cookie.js"></script>
 {% endblock %}

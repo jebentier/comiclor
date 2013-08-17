@@ -1,12 +1,38 @@
 $(function () {
 	$('#registration').wizard();
 	$(document).on('click', '.form-actions button', function(){
+		var csrftoken = $.cookie('csrftoken');
+		$.ajaxSetup({
+			crossDomain: false,
+			beforeSend: function(xhr, settings) {
+				xhr.setRequestHeader("X-CSRFToken", csrftoken);
+			}
+		});
 		switch($(this).data('action')){
 			case "create":
-				$('li[data-target="#step1"]').removeClass('active');
-				$('li[data-target="#step2"]').addClass('active').find('.badge').addClass('badge-info');
-				$('#step1').removeClass('active');
-				$('#step2').addClass('active');
+				$.ajax({
+					url: '/register',
+					type: 'post',
+					data: {
+						email: $('input[name="email"]').val(),
+						password: $('input[name="password"]').val(),
+						password_conf: $('input[name="password_conf"]').val()
+					},
+					success: function(data){
+						if(data['response_code']==0){
+							$('li[data-target="#step1"]').removeClass('active');
+							$('li[data-target="#step2"]').addClass('active').find('.badge').addClass('badge-info');
+							$('#step1').removeClass('active');
+							$('#step2').addClass('active');
+						}
+						else{
+							alert('error!');
+						}
+					},
+					error: function(){
+						alert('error!');
+					}
+				});
 				break;
 			case "confirm":
 				$('li[data-target="#step2"]').removeClass('active');

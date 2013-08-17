@@ -1,0 +1,56 @@
+{% extends "_layouts/base.html" %}
+
+{% block page_title %}Home{% endblock %}
+
+{% block navbar%}
+		<div class="nav-collapse collapse">
+			<ul class="nav pull-left">
+				<li class="current-page">
+					<a href="home.html"><i class="icon-home"></i><br />Home</a>
+				</li>
+				<li>
+					<a href="library.html"><i class="icon-book"></i><br />My Library</a>
+				</li>	
+				<li>
+					<a href="portfolio.html"><i class="icon-bookmark"></i><br />Saved Comics</a>
+				</li>
+				<li class="dropdown">
+					<a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-plus"></i><br />Create New</a>
+					<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel" style="text-align: left;">
+						<li style="width:200px;"><a href="#" style="padding: 10px 10px 5px 10px;"><i class="icon-picture" style="margin:0 10px;"></i> New Cell</a></li>
+						<li style="width:200px;"><a href="#" style="padding: 10px 10px 5px 10px;"><i class="icon-th-list" style="margin:0 10px;"></i> New Comic Strip</a></li>
+						<li style="width:200px;"><a href="#" style="padding: 10px 10px 5px 10px;"><i class="icon-book" style="margin:0 10px;"></i> New Comic Book</a></li>
+					</ul>
+				</li>
+				<li>
+					<a href="portfolio.html"><i class="icon-search"></i><br />Search</a>
+				</li>
+			</ul>
+		</div>
+		<div class="nav-collapse collapse">
+			<ul class="nav pull-right">
+				<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-user"></i><br />{{ username }}</a>
+						<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel" style="text-align: left;">
+							<li style="width:200px;"><a href="#" style="padding: 10px 10px 5px 10px;"><i class="icon-heart" style="margin:0 10px;"></i> Colaborators</a></li>
+							<li style="width:200px;"><a href="#" style="padding: 10px 10px 5px 10px;"><i class="icon-lock" style="margin:0 10px;"></i> Account Details</a></li>
+							<li style="width:200px;"><a href="{% url 'logout' %}" style="padding: 10px 10px 5px 10px;"><i class="icon-off" style="margin:0 10px;"></i> Logout</a></li>
+						</ul>
+				</li>					
+			</ul>
+		</div>
+{% endblock %}
+
+{% block page_content %}
+<!-- Welcome Pane -->
+		<div class="container" style="min-height:200px; background-color:#ebebeb;">
+			<div class="row-fluid" style="min-height:200px; background-color:#fff; text-align:center; padding-bottom:30px;">
+				<h1>Welcome to Comiclor</h1>
+			</div>
+		</div>
+
+{% endblock %}
+
+{% block additional_js %}
+	<script src="{{ STATIC_URL }}js/welcome.js"></script>
+{% endblock %}
