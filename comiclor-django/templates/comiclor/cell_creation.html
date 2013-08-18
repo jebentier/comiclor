@@ -1,0 +1,310 @@
+{% extends "_layouts/base.html" %}
+
+{% block page_title %}New Cell{% endblock %}
+
+{% block navbar%}
+		<div class="nav-collapse collapse">
+			<ul class="nav pull-left">
+				<li>
+					<a href="{% url 'home' %}"><i class="icon-home"></i><br />Home</a>
+				</li>
+				<li>
+					<a href="{% url 'library' %}"><i class="icon-book"></i><br />My Library</a>
+				</li>	
+				<li>
+					<a href="{% url 'comics_saved' %}"><i class="icon-bookmark"></i><br />Saved Comics</a>
+				</li>
+				<li class="dropdown current-page">
+					<a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-plus"></i><br />Create New</a>
+					<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel" style="text-align: left;">
+						<li style="width:200px;"><a href="{% url 'new_content' %}" style="padding: 10px 10px 5px 10px;"><i class="icon-upload-alt" style="margin:0 10px;"></i> Upload Content</a></li>
+						<li class="current-page" style="width:200px;"><a href="{% url 'new_cell' %}" style="padding: 10px 10px 5px 10px;"><i class="icon-picture" style="margin:0 10px;"></i> New Cell</a></li>
+						<li style="width:200px;"><a href="{% url 'new_strip' %}" style="padding: 10px 10px 5px 10px;"><i class="icon-th-list" style="margin:0 10px;"></i> New Comic Strip</a></li>
+						<li style="width:200px;"><a href="{% url 'new_book' %}" style="padding: 10px 10px 5px 10px;"><i class="icon-book" style="margin:0 10px;"></i> New Comic Book</a></li>
+					</ul>
+				</li>
+				<li>
+					<a href="{% url 'search' %}"><i class="icon-search"></i><br />Search</a>
+				</li>
+			</ul>
+		</div>
+		<div class="nav-collapse collapse">
+			<ul class="nav pull-right">
+				<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-user"></i><br />{{ display_name }}</a>
+						<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel" style="text-align: left;">
+							<li style="width:200px;"><a href="{% url 'colaborators' %}" style="padding: 10px 10px 5px 10px;"><i class="icon-heart" style="margin:0 10px;"></i> Colaborators</a></li>
+							<li style="width:200px;"><a href="{% url 'account_details' %}" style="padding: 10px 10px 5px 10px;"><i class="icon-lock" style="margin:0 10px;"></i> Account Details</a></li>
+							<li style="width:200px;"><a href="{% url 'logout' %}" style="padding: 10px 10px 5px 10px;"><i class="icon-off" style="margin:0 10px;"></i> Logout</a></li>
+						</ul>
+				</li>					
+			</ul>
+		</div>
+{% endblock %}
+
+{% block page_content %}
+		<style>
+			.content-selector {
+				float: right;
+				width: 30%;
+				background: #ebebeb;
+				margin-top: 25px;
+				margin-bottom: 100px;
+			}
+			.content-selector .content-grouping .grouping-title {
+				margin-left:20px;
+				cursor: pointer;
+			}
+			.content-selector .content-grouping .grouping-title i{
+				margin-left: 10px;
+			}
+			.content-selector .content-grouping hr {
+				margin: 5px 0px 10px 0px;
+			}
+			.content-selector .content-grouping .content-grouping-content {
+				padding:0px 10px;
+				margin-bottom: 15px;
+			}
+			.content-selector .content-grouping .content-grouping-content img {
+				max-height:100px; 
+				max-width:100px;
+				cursor: pointer;
+				margin:2px;
+			}
+			.content-selector .content-grouping .content-grouping-content img.content-placeholder {
+				height:100px; 
+				width:100px;
+			}
+			.cell-content {
+				float: left;
+				width: 65%;
+				margin-bottom: 100px;
+				overflow-x: scroll;
+			}
+			.new-cell {
+				position: relative;
+				height: 300px;
+				width: 300px;
+				background: #ccc;
+				border: 2px dashed #000;
+				margin-top: 25px;
+				left: 50%;
+			}
+			.new-cell.width-one {
+				width: 600px;
+				margin-left: -300px;
+			}
+			.new-cell.width-two {
+				width: 1200px;
+				margin-left: -600px;
+			}
+			.new-cell.width-three {
+				width: 1800px;
+				margin-left: -900px;
+			}
+			.new-cell.height-one {
+				height: 900px;
+			}
+			.new-cell.height-two {
+				height: 1800px;
+			}
+			.new-cell.height-three {
+				height: 2700px;
+			}
+			.cell-data {
+				margin-top: 20px;
+				text-align: center;
+			}
+			.cell-data label {
+				display: inline-block;
+			}
+			.cell-creation-row .form-actions {
+				position: absolute;
+				bottom: 0;
+				width: 100%;
+				margin: 0px 0px 0px -20px;
+				padding: 0;
+				height: 75px;
+				line-height: 75px;
+				text-align: right;
+			}
+			.cell-creation-row .form-actions .btn {
+				margin-right: 20px;
+				width: 100px;
+				height: 40px;
+			}
+		</style>
+
+		<div class="container" style="min-height:200px; background-color:#ebebeb;">
+			<div class="row-fluid cell-creation-row" style="background-color:#fff; text-align:left; padding:20px 20px 30px; 20px; position: relative;">
+				<div class="cell-content">
+					<div class="cell-data">
+						<div class="form-grouping" style="">
+							<label>Cell Name: </label>
+							<input type="text" placeholder="xyz cell"><br>
+						</div>
+						<div class="form-grouping" style="margin-bottom:10px;">
+							<label>Cell Width: </label>
+							<div class="btn-group change-width" data-toggle="buttons-radio" style="width:220px;">
+								<button type="button" class="btn active" style="width:33%;">1</button>
+								<button type="button" class="btn" style="width:33%;">2</button>
+								<button type="button" class="btn" style="width:33%;">3</button>
+							</div>
+						</div>
+						<div class="form-grouping" style="margin-bottom:10px;">
+							<label>Cell Height: </label>
+							<div class="btn-group change-height" data-toggle="buttons-radio" style="width:220px;margin-right: 3px;">
+								<button type="button" class="btn active" style="width:25%;">1</button>
+								<button type="button" class="btn" style="width:25%;">2</button>
+								<button type="button" class="btn" style="width:25%;">3</button>
+								<button type="button" class="btn" style="width:25%;">4</button>
+							</div>
+						</div>
+						<div class="form-grouping" style="margin-bottom:10px; margin-left:30px">
+							<label>Zoom: </label>
+							<div class="input-prepend input-append zoom" style="display:inline-block;width:220px;">
+								<div class="btn-group">
+									<button class="btn out" style="-webkit-border-radius: 4px 0 0 4px; -moz-border-radius: 4px 0 0 4px; border-radius: 4px 0 0 4px;">-</button>
+								</div>
+								<input class="span3" id="zoom_value" type="text" value="100%" disabled>
+								<div class="btn-group">
+									<button class="btn in">+</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="new-cell width-one height-one">
+
+					</div>
+				</div>
+				<div class="content-selector">
+					<div class="content-search">
+						<div class="input-append" style="text-align:right;">
+							<input class="span5" type="text" style="border-radius:0px;">
+							<button class="btn" type="button" style="border-radius:0px;"><i class="icon-search"></i></button>
+						</div>
+						<div class="content-grouping">
+							<h5 class="grouping-title">Cell Content <i class="icon-chevron-down"></i></h5>
+							<hr>
+							<div class="content-grouping-content">
+								<img class="content-placeholder" />
+								<img class="content-placeholder" />
+								<img class="content-placeholder" />
+								<img class="content-placeholder" />
+								<img class="content-placeholder" />
+								<img class="content-placeholder" />
+								<img class="content-placeholder" />
+								<img class="content-placeholder" />
+								<img class="content-placeholder" />
+								<img class="content-placeholder" />
+								<img class="content-placeholder" />
+								<img class="content-placeholder" />
+								<img class="content-placeholder" />
+								<img class="content-placeholder" />
+							</div>
+						</div>
+						<div class="content-grouping">
+							<h5 class="grouping-title">Chat Bubbles <i class="icon-chevron-down"></i></h5>
+							<hr>
+							<div class="content-grouping-content">
+								<img class="content-placeholder" />
+								<img class="content-placeholder" />
+								<img class="content-placeholder" />
+								<img class="content-placeholder" />
+								<img class="content-placeholder" />
+								<img class="content-placeholder" />
+							</div>
+						</div>
+						<div class="content-grouping">
+							<h5 class="grouping-title">Action Bubbles <i class="icon-chevron-down"></i></h5>
+							<hr>
+							<div class="content-grouping-content">
+								<img class="content-placeholder" />
+								<img class="content-placeholder" />
+								<img class="content-placeholder" />
+								<img class="content-placeholder" />
+								<img class="content-placeholder" />
+								<img class="content-placeholder" />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-actions">
+					<button type="submit" class="btn btn-primary btn-next" data-action="save">Save</button>
+					<button type="button" class="btn" data-action="cancel">Cancel</button>
+				</div>
+			</div>
+		</div>
+
+{% endblock %}
+
+{% block additional_js %}
+	<script>
+		$(function () {
+
+			var set_zoom = function(percent){
+				$('.zoom input').val(percent+"%");
+				$('.new-cell').css("zoom", percent+"%");
+			}
+
+			var curr_height = "height-one";
+			var curr_width = "width-one";
+
+			$(document).on('click', '.content-grouping h5', function(){
+				if($(this).find('i').attr('class').indexOf('up') >= 0){
+					$(this).find('i').removeClass('icon-chevron-up').addClass('icon-chevron-down');
+					$(this).siblings('.content-grouping-content').slideDown();
+				}
+				else{
+					$(this).find('i').addClass('icon-chevron-up').removeClass('icon-chevron-down');
+					$(this).siblings('.content-grouping-content').slideUp();
+				}
+			}).on('click', '.zoom .btn.in', function(){
+				var curr_zoom = $('.zoom input').val();
+				zoom_int = parseInt(curr_zoom.substring(0, curr_zoom.length-1));
+				if(zoom_int != 100)
+					zoom_int += 10;
+				set_zoom(zoom_int);
+			}).on('click', '.zoom .btn.out', function(){
+				var curr_zoom = $('.zoom input').val();
+				zoom_int = parseInt(curr_zoom.substring(0, curr_zoom.length-1));
+				if(zoom_int != 10)
+					zoom_int -= 10;
+				set_zoom(zoom_int);
+			}).on('click', '.change-height .btn', function(){
+				var new_height = "height-one";
+				switch($(this).text()){
+					case "1":
+						new_height = "height-one";
+						break;
+					case "2":
+						new_height = "height-two";
+						break;
+					case "3":
+						new_height = "height-three";
+						break;
+					case "4":
+						new_height = "height-four";
+						break;
+				}
+				$('.new-cell').removeClass(curr_height).addClass(new_height);
+				curr_height = new_height;
+			}).on('click', '.change-width .btn', function(){
+				var new_width = "width-one";
+				switch($(this).text()){
+					case "1":
+						new_width = "width-one";
+						break;
+					case "2":
+						new_width = "width-two";
+						break;
+					case "3":
+						new_width = "width-three";
+						break;
+				}
+				$('.new-cell').removeClass(curr_width).addClass(new_width);
+				curr_width = new_width;
+			});
+		});
+	</script>
+{% endblock %}

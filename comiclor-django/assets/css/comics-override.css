@@ -29,14 +29,14 @@ a:hover { color: #888; text-decoration: none; }
     width: 100%;
  }
 .row-fluid{
-	width: 90%;
-	margin-left: auto;
-	margin-right: auto;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /* Navbar */
 .navigation.container {
-	box-shadow: 0 0px 4px #ccc;
+    box-shadow: 0 0px 4px #ccc;
 }
 
 .header .navbar {
@@ -53,7 +53,7 @@ a:hover { color: #888; text-decoration: none; }
     -webkit-box-shadow: 0 0px 4px #ccc;
     box-shadow: 0 0px 4px #ccc;
     height: 90px; 
-	padding: 0 5%;
+    padding: 0 5%;
 }
 
 .header h1 {
@@ -68,7 +68,7 @@ a:hover { color: #888; text-decoration: none; }
     width: 280px;
     height: 63px;
     padding: 10px 0;
-	background-size: 160px 68px;
+    background-size: 160px 68px;
     background: url(../img/logo.png) 20px center no-repeat;
     position: relative;
     vertical-align: middle;
@@ -91,7 +91,19 @@ a:hover { color: #888; text-decoration: none; }
     background: #f8f8f8;
 }
 
-.header ul.nav li a:hover {
+.header ul.nav li.current-page ul li a{
+    padding-top: 0px;
+    border-top: none;
+    background: #fff;
+}
+
+.header ul.nav li.current-page ul li.current-page a{
+    padding-top: 15px;
+    border-top: 5px solid #0b610b;
+    background: #f8f8f8;
+}
+
+.header ul.nav li a:hover, .header ul.nav li ul li a:hover, .header ul.nav li.current-page ul li a:hover {
     background: #0b610b;
     color: #fff;
 }
@@ -120,47 +132,47 @@ a:hover { color: #888; text-decoration: none; }
 
 /* Welcome Video, Registration Form, Login Form */
 .welcome-video, .registration-form, .login-form {
-	padding: 30px inherit;
-	margin: 0 auto;
+    padding: 30px inherit;
+    margin: 0 auto;
 }
 
 .wizard#registration{
-	width: 855px;
-	margin-left: auto;
-	margin-right: auto;
-	background-color: #ededed;
+    width: 855px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #ededed;
 }
 
 ul.steps li {
-	border-bottom: 1px solid #d4d4d4;
+    border-bottom: 1px solid #d4d4d4;
 }
 .registration-content{
-	min-height: 402px;
-	height: auto;
-	width: 823px;
-	background: #fff;
-	margin-left: auto;
-	margin-right: auto;
-	margin-bottom: 6px;
-	text-align: left;
-	padding: 15px 15px 0px 15px;
-	border: 1px solid #d4d4d4;
-	margin-top: -2px;
+    min-height: 402px;
+    height: auto;
+    width: 823px;
+    background: #fff;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 6px;
+    text-align: left;
+    padding: 15px 15px 0px 15px;
+    border: 1px solid #d4d4d4;
+    margin-top: -2px;
 }
 .fuelux .form-actions {
-	text-align: right;
-	margin: 0 -15px;
-	bottom: 0;
-	position: absolute;
-	width: 653px;
+    text-align: right;
+    margin: 0 -15px;
+    bottom: 0;
+    position: absolute;
+    width: 653px;
 }
 .form-horizontal, .form {
-	height: 402px;
+    height: 402px;
 }
 .login-form input[type="checkbox"] {
-	margin-left: 55px;
-	margin-right: 5px;
-	margin-top: -3px;
+    margin-left: 55px;
+    margin-right: 5px;
+    margin-top: -3px;
 }
 
 /* Description */
@@ -288,6 +300,24 @@ ul.steps li {
     width: 175px;
     height: 175px;
 }
+.library-grouping-content .new-item {
+    height: 175px;
+    width: 175px;
+    display: inline-block;
+    vertical-align: middle;
+    border: 1px solid #ccc;
+    margin: 5px;
+    text-align: center;
+    cursor: pointer;
+}
+.library-grouping-content .new-item i {
+    font-size: 100px;
+    line-height: 175px;
+}
+.library-grouping-content .new-item:hover {
+    background-color: #0b610b;
+    color: #fff;
+}
 
 /* Footer */
 footer {
@@ -334,7 +364,7 @@ footer .widget i {
     overflow-y: hidden;
     list-style: none;
 }
-	
+    
 .tweet_list li {
     height: 100%;
     overflow-y: auto;
@@ -342,11 +372,11 @@ footer .widget i {
     list-style-type: none;
     line-height: 24px;
 }
-		
+        
 .tweet_list .tweet_avatar {
     float: left;
 }
-		
+        
 .tweet_list .tweet_avatar img {
     vertical-align: middle;
 }
@@ -408,5 +438,4 @@ footer .social a.skype { background: url(../img/social-icons/skype.png) left bot
 footer .social a.tumblr { background: url(../img/social-icons/tumblr.png) left bottom no-repeat; }
 
 footer .social a:hover { background-position: left top; }
-
 

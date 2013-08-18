@@ -12,18 +12,19 @@
 					<a href="{% url 'library' %}"><i class="icon-book"></i><br />My Library</a>
 				</li>	
 				<li>
-					<a href="portfolio.html"><i class="icon-bookmark"></i><br />Saved Comics</a>
+					<a href="{% url 'comics_saved' %}"><i class="icon-bookmark"></i><br />Saved Comics</a>
 				</li>
 				<li class="dropdown">
 					<a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-plus"></i><br />Create New</a>
 					<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel" style="text-align: left;">
-						<li style="width:200px;"><a href="#" style="padding: 10px 10px 5px 10px;"><i class="icon-picture" style="margin:0 10px;"></i> New Cell</a></li>
-						<li style="width:200px;"><a href="#" style="padding: 10px 10px 5px 10px;"><i class="icon-th-list" style="margin:0 10px;"></i> New Comic Strip</a></li>
-						<li style="width:200px;"><a href="#" style="padding: 10px 10px 5px 10px;"><i class="icon-book" style="margin:0 10px;"></i> New Comic Book</a></li>
+						<li style="width:200px;"><a href="{% url 'new_content' %}" style="padding: 10px 10px 5px 10px;"><i class="icon-upload-alt" style="margin:0 10px;"></i> Upload Content</a></li>
+						<li style="width:200px;"><a href="{% url 'new_cell' %}" style="padding: 10px 10px 5px 10px;"><i class="icon-picture" style="margin:0 10px;"></i> New Cell</a></li>
+						<li style="width:200px;"><a href="{% url 'new_strip' %}" style="padding: 10px 10px 5px 10px;"><i class="icon-th-list" style="margin:0 10px;"></i> New Comic Strip</a></li>
+						<li style="width:200px;"><a href="{% url 'new_book' %}" style="padding: 10px 10px 5px 10px;"><i class="icon-book" style="margin:0 10px;"></i> New Comic Book</a></li>
 					</ul>
 				</li>
 				<li>
-					<a href="portfolio.html"><i class="icon-search"></i><br />Search</a>
+					<a href="{% url 'search' %}"><i class="icon-search"></i><br />Search</a>
 				</li>
 			</ul>
 		</div>
@@ -32,8 +33,8 @@
 				<li class="dropdown">
 						<a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-user"></i><br />{{ display_name }}</a>
 						<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel" style="text-align: left;">
-							<li style="width:200px;"><a href="#" style="padding: 10px 10px 5px 10px;"><i class="icon-heart" style="margin:0 10px;"></i> Colaborators</a></li>
-							<li style="width:200px;"><a href="#" style="padding: 10px 10px 5px 10px;"><i class="icon-lock" style="margin:0 10px;"></i> Account Details</a></li>
+							<li style="width:200px;"><a href="{% url 'colaborators' %}" style="padding: 10px 10px 5px 10px;"><i class="icon-heart" style="margin:0 10px;"></i> Colaborators</a></li>
+							<li style="width:200px;"><a href="{% url 'account_details' %}" style="padding: 10px 10px 5px 10px;"><i class="icon-lock" style="margin:0 10px;"></i> Account Details</a></li>
 							<li style="width:200px;"><a href="{% url 'logout' %}" style="padding: 10px 10px 5px 10px;"><i class="icon-off" style="margin:0 10px;"></i> Logout</a></li>
 						</ul>
 				</li>					
@@ -42,6 +43,10 @@
 {% endblock %}
 
 {% block page_content %}
+
+		<style>
+			
+		</style>
 <!-- Welcome Pane -->
 		<div class="container" style="min-height:200px; background-color:#ebebeb;">
 			<div class="row-fluid" style="background-color:#fff; text-align:left; padding-bottom:30px;">
@@ -61,6 +66,7 @@
 						<img class="placeholder" />
 						<img class="placeholder" />
 						<img class="placeholder" />
+						<a href="#"><div class="new-item" data-item-type="cell-content"><i class="icon-plus"></i></div></a>
 					</div>
 				</div>
 				<div class="library-grouping">
@@ -79,6 +85,7 @@
 						<img class="placeholder" />
 						<img class="placeholder" />
 						<img class="placeholder" />
+						<a href="{% url 'new_cell' %}"><div class="new-item" data-item-type="cell"><i class="icon-plus"></i></div></a>
 					</div>
 				</div>
 				<div class="library-grouping">
@@ -97,6 +104,7 @@
 						<img class="placeholder" />
 						<img class="placeholder" />
 						<img class="placeholder" />
+						<a href="#"><div class="new-item" data-item-type="comic-strip"><i class="icon-plus"></i></div></a>
 					</div>
 				</div>
 				<div class="library-grouping">
@@ -115,6 +123,7 @@
 						<img class="placeholder" />
 						<img class="placeholder" />
 						<img class="placeholder" />
+						<a href="#"><div class="new-item" data-item-type="comic-book"><i class="icon-plus"></i></div></a>
 					</div>
 				</div>
 			</div>

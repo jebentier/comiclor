@@ -30,7 +30,7 @@ def register_user(request):
 		pwd_conf = request.POST['password_conf']
 		try:
 			u = User.objects.get(username=email)
-			return HttpResponse(json.dumps({"response_code": 1}), content_type="application/json")
+			return HttpResponse(json.dumps({"response_code": 1, "message": "Email Address Already In Use."}), content_type="application/json")
 		except User.DoesNotExist:
 			pass
 		if pwd == pwd_conf:
@@ -42,7 +42,7 @@ def register_user(request):
 			user.save()
 			return HttpResponse(json.dumps({"response_code": 0, "email": email}), content_type="application/json")
 		else:
-			return HttpResponse(json.dumps({"response_code": 2, "email": email, "pwd": pwd, "pwd_conf": pwd_conf}), content_type="application/json")
+			return HttpResponse(json.dumps({"response_code": 2, "message": "Missmatched Passwords."}), content_type="application/json")
 
 	else:
 		return HttpResponse(json.dumps({"response_code": -1}), content_type="application/json")
@@ -54,14 +54,14 @@ def confirm_email(request):
 		try:
 			u = User.objects.get(username=email)
 		except User.DoesNotExist:
-			return HttpResponse(json.dumps({"response_code": 3}), content_type="application/json")
+			return HttpResponse(json.dumps({"response_code": 3, "message": "User Does Not Exist."}), content_type="application/json")
 		p = u.profile
 		if p.confirmation_code == code:
 			p.is_active = True
 			p.save()
 			return HttpResponse(json.dumps({"response_code": 0}), content_type="application/json")
 		else:
-			return HttpResponse(json.dumps({"response_code": 4}), content_type="application/json")
+			return HttpResponse(json.dumps({"response_code": 4, "message": "Confirmation Code Does Not Match."}), content_type="application/json")
 
 	else:
 		return HttpResponse(json.dumps({"response_code": -1}), content_type="application/json")
@@ -79,7 +79,7 @@ def update_user(request):
 		try:
 			u = User.objects.get(username=email)
 		except User.DoesNotExist:
-			return HttpResponse(json.dumps({"response_code": 3}), content_type="application/json")
+			return HttpResponse(json.dumps({"response_code": 3, "message": "User Does Not Exist."}), content_type="application/json")
 		p = u.profile
 		p.display_name = dname
 		p.date_of_birth = date(month=int(dob_month), day=int(dob_day), year=int(dob_year))
@@ -92,6 +92,23 @@ def update_user(request):
 		return HttpResponse(json.dumps({"response_code": 0}), content_type="application/json")
 	else:
 		return HttpResponse(json.dumps({"response_code": -1}), content_type="application/json")
+
+def cancel_registration(request):
+	if request.method == "POST":
+		email = request.POST['email']
+		try:
+			u = User.objects.get(username=email)
+		except User.DoesNotExist:
+			return HttpResponse(json.dumps({"response_code": 0}), content_type="application/json")
+		if not u.profile.is_active:
+			send_mail('Account Deleted', "Account Deleted", 'donotreply@comiclor.com', [email], fail_silently=False)
+			u.delete()
+		return HttpResponse(json.dumps({"response_code": 0}), content_type="application/json")
+
+@login_required(redirect_field_name=None)
+def coming_soon(request):
+	c = {"display_name": request.user.profile.display_name}
+	return render_to_response('coming_soon.html', c)
 
 @login_required(redirect_field_name=None)
 def logoff(request):

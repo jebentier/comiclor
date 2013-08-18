@@ -1,6 +1,11 @@
 $(function () {
 	$('#registration').wizard();
 	$('.dropdown-date-picker').dropdown_datepicker();
+
+	var updateRegStatus = function(message, id){
+		$(id).text(message);
+	};
+
 	$(document).on('click', '.form-actions button', function(){
 		var csrftoken = $.cookie('csrftoken');
 		$.ajaxSetup({
@@ -27,11 +32,11 @@ $(function () {
 							$('#step2').addClass('active');
 						}
 						else{
-							alert('error!');
+							updateRegStatus(data.message, "#email_reg_status");
 						}
 					},
 					error: function(){
-						alert('error!');
+						updateRegStatus("Error Contacting Server. Please Try Again Later.", "#email_reg_status");
 					}
 				});
 				break;
@@ -51,11 +56,11 @@ $(function () {
 							$('#step3').addClass('active');
 						}
 						else{
-							alert('error!');
+							updateRegStatus(data.message, "#email_conf_status");
 						}
 					},
 					error: function(){
-						alert('error!');
+						updateRegStatus("Error Contacting Server. Please Try Again Later.", "#email_conf_status");
 					}
 				});
 				break;
@@ -78,19 +83,38 @@ $(function () {
 							window.location = '/home'
 						}
 						else{
-							alert('error!');
+							updateRegStatus(data.message, "#add_info_status");
 						}
 					},
 					error: function(){
-						alert('error!');
+						updateRegStatus("Error Contacting Server. Please Try Again Later.", "#add_info_status");
 					}
 				});
 				break;
 			case "cancel":
-				$('.registration-content input').val("");
-				$('.current-page').removeClass('current-page');
-				$('.registration-form').hide();
-				$('.welcome-video').show();
+				if($('.registration-content input[name="email"]').val() != ''){
+					$.ajax({
+					url: '/cancel_registration',
+					type: 'post',
+					data: {
+						email: $('.registration-form input[name="email"]').val(),
+					},
+					success: function(data){
+						if(data['response_code']==0){
+							$('.registration-content input').val("");
+							$('.current-page').removeClass('current-page');
+							$('.registration-form').hide();
+							$('.welcome-video').show();
+						}
+						else{
+							alert('error!');
+						}
+					},
+					error: function(){
+						updateRegStatus("Error Contacting Server. Please Try Again Later.", "#email_reg_status");
+					}
+				});
+				}
 				break;
 			default:
 				console.log("action not permitted!");
